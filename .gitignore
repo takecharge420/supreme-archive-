@@ -1,0 +1,10 @@
+.vercel
+metadata.db
+images/
+*.csv
+*.db
+lookbook.html
+lookbook_improved.html
+multi_year_test.html
+test_lookbook.html
+.cat_cache.json
