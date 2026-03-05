@@ -4719,6 +4719,27 @@
       border: 0;
     }
 
+    /* ── スケルトンローディング ───────────────────────── */
+    @keyframes skeleton-pulse {
+      0%, 100% { opacity: 1; }
+      50%       { opacity: 0.4; }
+    }
+    .skeleton-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 1px;
+    }
+    @media (min-width: 641px) {
+      .skeleton-grid { grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); }
+    }
+    .skeleton-item {
+      background: #ebebeb;
+      aspect-ratio: 3/4;
+      animation: skeleton-pulse 1.4s ease-in-out infinite;
+    }
+    .skeleton-item:nth-child(2n)   { animation-delay: 0.2s; }
+    .skeleton-item:nth-child(3n)   { animation-delay: 0.4s; }
+
     /* ── Empty / Loading ─────────────────────────────── */
     .empty-msg {
       padding: 60px 24px;
@@ -4727,22 +4748,7 @@
       font-size: 14px;
     }
     #grid-loading {
-      padding: 60px 24px;
-      text-align: center;
-      color: var(--dim);
-      font-size: 13px;
-      letter-spacing: 0.08em;
-    }
-    #grid-loading::after {
-      content: '';
-      display: block;
-      width: 28px;
-      height: 28px;
-      border: 2px solid var(--border);
-      border-top-color: var(--red);
-      border-radius: 50%;
-      margin: 16px auto 0;
-      animation: spin 0.7s linear infinite;
+      display: none; /* スケルトンに置き換え */
     }
     @keyframes spin { to { transform: rotate(360deg); } }
 
@@ -4768,6 +4774,8 @@
     /* ── Responsive ──────────────────────────────────── */
     @media (max-width: 640px) {
       :root { --panel-w: 100vw; }
+      /* モバイル: 縦並びレイアウト (cat-nav上 → grid下) */
+      .layout { flex-direction: column; }
       .lookbook-grid { grid-template-columns: repeat(2, 1fr); gap: 1px; }
       .filter-bar { padding: 8px 12px; }
 
@@ -4859,7 +4867,11 @@
 <button class="cat-item active" data-cat="">all</button>
     </nav>
     <div class="grid-wrap" id="grid-wrap">
-      <div id="grid-loading">LOADING</div>
+      <div id="grid-loading"></div>
+      <!-- スケルトンローディング (JS ロード前に表示) -->
+      <div class="skeleton-grid" id="skeleton-grid">
+        <div class="skeleton-item"></div><div class="skeleton-item"></div><div class="skeleton-item"></div><div class="skeleton-item"></div><div class="skeleton-item"></div><div class="skeleton-item"></div><div class="skeleton-item"></div><div class="skeleton-item"></div><div class="skeleton-item"></div><div class="skeleton-item"></div><div class="skeleton-item"></div><div class="skeleton-item"></div>
+      </div>
       <div class="lookbook-grid" id="lookbook-grid"></div>
       <div id="load-sentinel" style="height:1px"></div>
       <div class="empty-msg" id="empty-msg" style="display:none">
@@ -5073,7 +5085,9 @@
   }
 
   function applyFilters() {
-    filteredItems = ITEMS.filter(item => {
+    // 年別キャッシュがあればそちらを使う（高速化）
+    const source = yearCache[activeYear] || ITEMS;
+    filteredItems = source.filter(item => {
       const yearOk = activeYear === 'all' || String(item.year) === String(activeYear);
       const catOk  = !activeCategory || item.cat === activeCategory;
       return yearOk && catOk;
@@ -5088,13 +5102,26 @@
   }, { rootMargin: '400px' });
   scrollObs.observe(sentinel);
 
-  // Year tabs
+  // Year tabs — 年別JSONを遅延ロード
   document.querySelectorAll('.season-tab').forEach(btn => {
     btn.addEventListener('click', () => {
       document.querySelectorAll('.season-tab').forEach(b => b.classList.remove('active'));
       btn.classList.add('active');
       activeYear = btn.dataset.year;
-      applyFilters();
+      if (yearCache[activeYear]) {
+        applyFilters();
+      } else {
+        // 未ロードの年はスケルトン表示してからJSONを取得
+        grid.innerHTML = '';
+        if (skeletonGrid) skeletonGrid.style.display = 'grid';
+        loadYear(activeYear).then(() => {
+          if (skeletonGrid) skeletonGrid.style.display = 'none';
+          applyFilters();
+        }).catch(() => {
+          if (skeletonGrid) skeletonGrid.style.display = 'none';
+          grid.innerHTML = '<div class="empty-msg">読み込みに失敗しました。</div>';
+        });
+      }
     });
   });
 
@@ -5250,28 +5277,65 @@
     }
   }, { passive: true });
 
-  // Grid item click — アンカーナビゲーションを防いでパネルを開く
+  // ── Load data & initial render ────────────────────────────────
+  const gridLoading = document.getElementById('grid-loading');
+
+  // 年別キャッシュ（一度ロードした年はキャッシュ）
+  const yearCache = {};
+  // id → item の全体マップ（パネル用）
+  const ITEMS_MAP = new Map();
+
+  // 年別JSONをロード（存在しなければフォールバックとして全件ロード）
+  async function loadYear(year) {
+    if (yearCache[year]) return yearCache[year];
+    try {
+      const r = await fetch(`/items-${year}.json`);
+      if (!r.ok) throw new Error('not found');
+      const data = await r.json();
+      yearCache[year] = data;
+      data.forEach(item => ITEMS_MAP.set(item.id, item));
+      return data;
+    } catch(e) {
+      // フォールバック: 全件JSON
+      const r2 = await fetch('/items.json');
+      const all = await r2.json();
+      all.forEach(item => ITEMS_MAP.set(item.id, item));
+      // 全年をキャッシュ
+      const byY = {};
+      all.forEach(item => {
+        const y = item.year || 9999;
+        if (!byY[y]) byY[y] = [];
+        byY[y].push(item);
+      });
+      Object.entries(byY).forEach(([y, items]) => { yearCache[y] = items; });
+      return yearCache[year] || all;
+    }
+  }
+
+  // グリッドクリック — idでアイテムをマップから取得
   grid.addEventListener('click', e => {
     e.preventDefault();
     const card = e.target.closest('.grid-item');
     if (!card) return;
     const id = parseInt(card.dataset.id);
-    const item = ITEMS[id];
+    const item = ITEMS_MAP.get(id) || ITEMS[id];
     if (!item) return;
     openPanel(item);
   });
 
-  // ── Load data & initial render ────────────────────────────────
-  const gridLoading = document.getElementById('grid-loading');
-  fetch('/items.json')
-    .then(r => r.json())
+  // 初回ロード: アクティブ年のみ取得（高速化）
+  const skeletonGrid = document.getElementById('skeleton-grid');
+  loadYear(activeYear)
     .then(data => {
-      ITEMS = data;
+      ITEMS = Array.from(ITEMS_MAP.values());
+      filteredItems = data;
+      renderItems(false);
+      if (skeletonGrid) skeletonGrid.style.display = 'none';
       if (gridLoading) gridLoading.style.display = 'none';
-      applyFilters();
     })
     .catch(() => {
-      if (gridLoading) gridLoading.textContent = '読み込みに失敗しました。リロードしてください。';
+      if (skeletonGrid) skeletonGrid.style.display = 'none';
+      if (gridLoading) { gridLoading.style.display = 'block'; gridLoading.textContent = '読み込みに失敗しました。リロードしてください。'; }
     });
 
   </script>
