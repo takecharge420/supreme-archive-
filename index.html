@@ -4715,6 +4715,7 @@
     .cta-arr { font-size: 16px; opacity: 0.55; }
     /* 各ショップカラー */
     .cta-stockx   { background: linear-gradient(135deg,#00b359,#00ad55); color:#fff; }
+    .cta-mercari  { background: linear-gradient(135deg,#ff4757,#ff0211); color:#fff; }
     .cta-2ndst    { background: linear-gradient(135deg,#f07820,#e8680a); color:#fff; }
     .cta-rinkan   { background: linear-gradient(135deg,#2a2a2a,#1a1a1a); color:#fff; }
     .cta-treasure { background: linear-gradient(135deg,#1a7fd4,#1265b0); color:#fff; }
@@ -4842,7 +4843,7 @@
       <span class="item-count" id="shown-count">13607</span>
       <span>件</span>
       <span>·</span>
-      <span>2026-03-05</span>
+      <span>2026-03-06</span>
     </div>
   </header>
 
@@ -4953,6 +4954,16 @@
 
       <!-- 中古品を探す -->
       <p class="panel-sec-label">中古品を探す</p>
+      <a id="mercari-btn" href="#" target="_blank" rel="noopener" class="panel-cta cta-mercari">
+        <div class="cta-left">
+          <span class="cta-name">メルカリ</span>
+          <span class="cta-micro">個人出品で最安値が見つかる</span>
+        </div>
+        <div class="cta-right">
+          <span class="cta-badge">中古</span>
+          <span class="cta-arr">›</span>
+        </div>
+      </a>
       <a href="#" target="_blank" rel="noopener sponsored" class="panel-cta cta-2ndst r-shop-btn">
         <div class="cta-left">
           <span class="cta-name">2nd STREET</span>
@@ -5017,7 +5028,7 @@
 
   <!-- Footer -->
   <footer class="site-footer">
-    Supreme Archive — 13607 items · 2026-03-05<br>
+    Supreme Archive — 13607 items · 2026-03-06<br>
     All images © their respective owners.<br>
     <a href="/privacy.html" style="color:var(--dim);text-decoration:underline;font-size:11px;">プライバシーポリシー</a>
     &nbsp;·&nbsp;
@@ -5204,6 +5215,7 @@
     const rakutenUrl = 'https://hb.afl.rakuten.co.jp/hgc/' + _RAKUTEN_AF_ID + '/?pc=' + encodeURIComponent(rakutenShopUrl);
 
     document.getElementById('stockx-btn').href = stockxUrl;
+    document.getElementById('mercari-btn').href = 'https://jp.mercari.com/search?keyword=supreme+' + q;
     // 4ショップボタンはすべて同じ楽天全shop検索URLに飛ばす
     document.querySelectorAll('.r-shop-btn').forEach(btn => { btn.href = rakutenUrl; });
 
