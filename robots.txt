@@ -18,6 +18,9 @@ Disallow: /
 User-agent: ChatGPT-User
 Disallow: /
 
+User-agent: OAI-SearchBot
+Disallow: /
+
 User-agent: anthropic-ai
 Disallow: /
 
@@ -55,6 +58,27 @@ User-agent: DiffBot
 Disallow: /
 
 User-agent: DataForSeoBot
+Disallow: /
+
+User-agent: Meta-ExternalAgent
+Disallow: /
+
+User-agent: Meta-ExternalFetcher
+Disallow: /
+
+User-agent: Omgilibot
+Disallow: /
+
+User-agent: omgili
+Disallow: /
+
+User-agent: ImagesiftBot
+Disallow: /
+
+User-agent: img2dataset
+Disallow: /
+
+User-agent: Scrapy
 Disallow: /
 
 # ── スクレイパー・一括取得Bot ─────────────────────────────────
