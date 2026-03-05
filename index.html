@@ -5215,7 +5215,7 @@
     const rakutenUrl = 'https://hb.afl.rakuten.co.jp/hgc/' + _RAKUTEN_AF_ID + '/?pc=' + encodeURIComponent(rakutenShopUrl);
 
     document.getElementById('stockx-btn').href = stockxUrl;
-    document.getElementById('mercari-btn').href = 'https://jp.mercari.com/search?keyword=supreme+' + q;
+    document.getElementById('mercari-btn').href = 'https://jp.mercari.com/search?keyword=supreme+' + q + '&ref=1069504491';
     // 4ショップボタンはすべて同じ楽天全shop検索URLに飛ばす
     document.querySelectorAll('.r-shop-btn').forEach(btn => { btn.href = rakutenUrl; });
 
