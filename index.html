@@ -5078,6 +5078,13 @@
     return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
   }
 
+  // 画像プロキシ: ホットリンク保護回避 + WebP変換 + リサイズ最適化
+  function proxyImg(url, width) {
+    if (!url || !url.startsWith('http')) return url;
+    return 'https://wsrv.nl/?url=' + encodeURIComponent(url)
+      + '&w=' + width + '&output=webp&q=85&n=-1';
+  }
+
   function createGridItem(item) {
     const fig = document.createElement('figure');
     fig.className = 'grid-item';
@@ -5096,7 +5103,7 @@
     fig.innerHTML =
       `<div class="grid-img-wrap">` +
       seoLink +
-      `<img src="${escHtml(item.img)}" alt="${escHtml((item.title||'Supreme Item').slice(0,120))}" loading="lazy">` +
+      `<img src="${escHtml(proxyImg(item.img, 400))}" alt="${escHtml((item.title||'Supreme Item').slice(0,120))}" loading="lazy">` +
       `${seasonBadge}${infoHtml}` +
       `<div class="grid-hover"><span class="hover-label">CHECK →</span></div>` +
       `</div><figcaption class="sr-only">${escHtml(item.title||'')}</figcaption>`;
@@ -5174,8 +5181,8 @@
   function openPanel(item) {
     currentItem = item;
 
-    // 画像
-    panelImg.src = item.img;
+    // 画像 (パネルは高解像度)
+    panelImg.src = proxyImg(item.img, 800);
     panelImg.alt = item.title || '';
 
     // 年バッジ
