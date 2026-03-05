@@ -4642,6 +4642,7 @@
       max-height: 46svh;
       object-fit: contain;
       display: block;
+      transition: opacity 0.2s ease;
     }
     .panel-info {
       padding: 14px 20px 12px;
@@ -5192,8 +5193,13 @@
   function openPanel(item) {
     currentItem = item;
 
-    // 画像 (パネルは高解像度)
-    panelImg.src = proxyImg(item.img, 800);
+    // 画像: 一度クリアしてからセット（前の画像が残らないように）
+    panelImg.style.opacity = '0';
+    panelImg.src = '';
+    const newSrc = proxyImg(item.img, 800);
+    panelImg.onload = () => { panelImg.style.opacity = '1'; };
+    panelImg.onerror = () => { panelImg.style.opacity = '1'; };
+    panelImg.src = newSrc;
     panelImg.alt = item.title || '';
 
     // 年バッジ
