@@ -4913,19 +4913,31 @@
         </div>
         <span class="panel-cta-arr">→</span>
       </a>
-      <a id="rakuten-btn" href="#" target="_blank" rel="noopener sponsored"
-        class="panel-cta cta-rakuten">
+      <a href="#" target="_blank" rel="noopener sponsored" class="panel-cta cta-rakuten r-shop-btn">
         <div>
-          <div class="panel-cta-main">楽天市場</div>
-          <div class="panel-cta-sub">ポイントが貯まる・使える</div>
+          <div class="panel-cta-main">2nd STREET</div>
+          <div class="panel-cta-sub">楽天市場で探す</div>
         </div>
         <span class="panel-cta-arr">→</span>
       </a>
-      <a href="https://kaitori.rinkan.co.jp/" target="_blank" rel="noopener sponsored"
-        class="panel-cta cta-rinkan">
+      <a href="#" target="_blank" rel="noopener sponsored" class="panel-cta cta-rinkan r-shop-btn">
         <div>
-          <div class="panel-cta-main">RINKAN 宅配買取</div>
-          <div class="panel-cta-sub">業界最高水準・送料無料</div>
+          <div class="panel-cta-main">RINKAN</div>
+          <div class="panel-cta-sub">楽天市場で探す</div>
+        </div>
+        <span class="panel-cta-arr">→</span>
+      </a>
+      <a href="#" target="_blank" rel="noopener sponsored" class="panel-cta r-shop-btn" style="background:#1a6b3a;color:#fff;">
+        <div>
+          <div class="panel-cta-main">トレジャーファクトリー</div>
+          <div class="panel-cta-sub">楽天市場で探す</div>
+        </div>
+        <span class="panel-cta-arr">→</span>
+      </a>
+      <a href="#" target="_blank" rel="noopener sponsored" class="panel-cta r-shop-btn" style="background:#5c3d1e;color:#fff;">
+        <div>
+          <div class="panel-cta-main">カインドオル</div>
+          <div class="panel-cta-sub">楽天市場で探す</div>
         </div>
         <span class="panel-cta-arr">→</span>
       </a>
@@ -5118,7 +5130,8 @@
     const rakutenUrl = 'https://hb.afl.rakuten.co.jp/hgc/' + _RAKUTEN_AF_ID + '/?pc=' + encodeURIComponent(rakutenShopUrl);
 
     document.getElementById('stockx-btn').href = stockxUrl;
-    document.getElementById('rakuten-btn').href = rakutenUrl;
+    // 4ショップボタンはすべて同じ楽天全shop検索URLに飛ばす
+    document.querySelectorAll('.r-shop-btn').forEach(btn => { btn.href = rakutenUrl; });
 
     panel.classList.add('open');
     gridWrap.classList.add('panel-open');
