@@ -4630,83 +4630,73 @@
       pointer-events: auto;
     }
 
-    /* ── FOMO バー ───────────────────────────────────── */
-    .fomo-bar {
+    /* ── パネル内パーツ ───────────────────────────────── */
+    .panel-img-box {
+      width: 100%;
+      background: #f5f5f5;
+      flex-shrink: 0;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    #panel-img {
+      width: 100%;
+      max-height: 46svh;
+      object-fit: contain;
+      display: block;
+    }
+    .panel-info {
+      padding: 16px 20px 12px;
+      border-bottom: 1px solid #f0f0f0;
+      flex-shrink: 0;
+    }
+    .panel-info-meta {
       display: flex;
       align-items: center;
       gap: 6px;
-      padding: 8px 14px;
-      background: linear-gradient(90deg, #fff7ed, #fff3e0);
-      border-bottom: 1px solid #fed7aa;
-      font-size: 11px;
+      margin-bottom: 6px;
+    }
+    #panel-year-badge {
+      font-size: 10px;
+      font-weight: 900;
+      letter-spacing: 0.1em;
+      padding: 2px 8px;
+      background: #111;
+      color: #fff;
+    }
+    #panel-title {
+      font-size: 15px;
       font-weight: 700;
-      color: #c2410c;
-      letter-spacing: 0.02em;
-      animation: fomo-slide-in 0.35s cubic-bezier(.4,0,.2,1) both;
-      overflow: hidden;
+      line-height: 1.45;
+      color: #111;
+      word-break: break-word;
     }
-    .fomo-bar.hiding {
-      animation: fomo-slide-out 0.4s cubic-bezier(.4,0,.2,1) both;
+    .panel-ctas {
+      padding: 16px 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      overflow-y: auto;
+      flex: 1;
     }
-    .fomo-dot {
-      display: inline-block;
-      width: 6px;
-      height: 6px;
-      background: #ef4444;
-      border-radius: 50%;
-      margin-left: auto;
+    .panel-cta {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 15px 20px;
+      border-radius: 12px;
+      text-decoration: none;
+      transition: opacity 0.15s;
       flex-shrink: 0;
-      animation: fomo-pulse 1.2s ease-in-out infinite;
     }
-    @keyframes fomo-slide-in {
-      from { transform: translateY(-100%); opacity: 0; }
-      to   { transform: translateY(0);    opacity: 1; }
-    }
-    @keyframes fomo-slide-out {
-      from { transform: translateY(0);    opacity: 1; max-height: 60px; }
-      to   { transform: translateY(-100%); opacity: 0; max-height: 0; padding: 0; }
-    }
-    @keyframes fomo-pulse {
-      0%, 100% { transform: scale(1);   opacity: 1; }
-      50%       { transform: scale(1.5); opacity: 0.6; }
-    }
-
-    /* ── Sticky 買取 CTA ─────────────────────────────── */
-    .kaitori-main-cta {
-      position: relative;
-      overflow: hidden;
-      transition: transform 0.15s, box-shadow 0.15s;
-      box-shadow: 0 0 0 0 rgba(250,204,21,0.5);
-      animation: kaitori-glow 2.4s ease-in-out infinite;
-    }
-    .kaitori-main-cta:hover {
-      transform: translateY(-1px);
-      box-shadow: 0 6px 20px rgba(251,191,36,0.55);
-    }
-    .kaitori-main-cta::after {
-      content: '';
-      position: absolute;
-      inset: 0;
-      background: linear-gradient(90deg, transparent 0%, rgba(255,255,255,0.3) 50%, transparent 100%);
-      transform: translateX(-100%);
-      animation: kaitori-shimmer 2.8s ease-in-out infinite;
-    }
-    .kaitori-pulse-ring span {
-      display: inline-block;
-      animation: kaitori-bounce 1.8s ease-in-out infinite;
-    }
-    @keyframes kaitori-glow {
-      0%, 100% { box-shadow: 0 0 0 0 rgba(250,204,21,0.3); }
-      50%       { box-shadow: 0 0 16px 4px rgba(250,204,21,0.5); }
-    }
-    @keyframes kaitori-shimmer {
-      0%   { transform: translateX(-100%); }
-      60%, 100% { transform: translateX(200%); }
-    }
-    @keyframes kaitori-bounce {
-      0%, 100% { transform: translateY(0);   }
-      50%       { transform: translateY(-4px); }
-    }
+    .panel-cta:active { opacity: 0.75; }
+    .panel-cta-main { font-size: 15px; font-weight: 800; }
+    .panel-cta-sub  { font-size: 11px; font-weight: 400; opacity: 0.7; margin-top: 2px; }
+    .panel-cta-arr  { font-size: 18px; opacity: 0.6; flex-shrink: 0; margin-left: 12px; }
+    .cta-stockx  { background: #00ad55; color: #fff; }
+    .cta-rakuten { background: #BF0000; color: #fff; }
+    .cta-rinkan  { background: #111;    color: #fff; }
 
     /* ── スクリーンリーダー専用（SEO figcaption 用） ──── */
     .sr-only {
@@ -4786,18 +4776,21 @@
         left: 0 !important;
         right: 0 !important;
         width: 100% !important;
-        height: 88svh;
+        height: 92svh;
         border-radius: 20px 20px 0 0;
-        border-left: none;
+        border-left: none !important;
         transform: translateY(100%) !important;
         padding-bottom: var(--safe-bottom);
+        box-shadow: 0 -8px 40px rgba(0,0,0,0.18) !important;
       }
       #price-panel.open {
         transform: translateY(0) !important;
       }
       .grid-wrap.panel-open { margin-right: 0 !important; }
-      #panel-img { max-height: 240px !important; }
+      #panel-img { max-height: 44svh !important; }
       .panel-drag { display: flex !important; }
+      /* 閉じるボタン: モバイルでは画像の右上 */
+      #panel-close { top: 56px !important; }
 
       /* タッチターゲット拡大 */
       .season-tab { padding: 10px 14px; min-height: 44px; display: flex; align-items: flex-end; border-bottom-width: 2px; }
@@ -4880,102 +4873,62 @@
     </div>
   </div>
 
-  <!-- ═══ Price Panel (Tailwind) ═══ -->
+  <!-- ═══ Price Panel ═══ -->
   <aside id="price-panel"
-    class="fixed top-0 right-0 h-screen z-[300] flex flex-col overflow-hidden bg-white border-l border-gray-100 shadow-2xl"
-    style="width:var(--panel-w);">
+    style="position:fixed;top:0;right:0;height:100dvh;width:var(--panel-w);z-index:300;
+           display:flex;flex-direction:column;overflow:hidden;background:#fff;
+           border-left:1px solid #e5e5e5;box-shadow:-4px 0 24px rgba(0,0,0,0.08);">
 
     <!-- ドラッグハンドル (モバイルのみ表示) -->
     <div class="panel-drag" id="panel-drag"><div class="panel-drag-bar"></div></div>
 
-    <!-- ── ヘッダー ─────────────────────────────────── -->
-    <div class="flex items-center gap-3 px-4 py-3 border-b border-gray-100 flex-shrink-0">
-      <button id="panel-close" aria-label="閉じる"
-        class="w-7 h-7 rounded-full bg-gray-100 hover:bg-gray-200 flex items-center justify-center text-gray-400 hover:text-gray-700 transition-colors text-xs flex-shrink-0 cursor-pointer border-0">✕</button>
-      <div id="panel-title" class="text-[11px] font-bold tracking-wide text-gray-800 truncate flex-1">—</div>
+    <!-- 閉じるボタン (右上フロート) -->
+    <button id="panel-close" aria-label="閉じる"
+      style="position:absolute;top:14px;right:16px;z-index:10;
+             width:32px;height:32px;border-radius:50%;background:rgba(0,0,0,0.55);
+             border:none;color:#fff;font-size:14px;cursor:pointer;
+             display:flex;align-items:center;justify-content:center;
+             -webkit-tap-highlight-color:transparent;">✕</button>
+
+    <!-- 画像: 全幅・大きく -->
+    <div class="panel-img-box">
+      <img id="panel-img" src="" alt="" loading="lazy">
     </div>
 
-    <!-- ── 画像 ──────────────────────────────────────── -->
-    <img id="panel-img" src="" alt=""
-      class="w-full object-contain flex-shrink-0 bg-gray-50"
-      style="max-height:360px;">
-
-    <!-- ── アイテム情報バー ───────────────────────────── -->
-    <div class="flex items-center gap-2 px-4 py-2 border-b border-gray-100 flex-shrink-0 bg-white">
-      <div id="panel-year-badge" class="hidden text-[10px] font-black tracking-wider px-2 py-0.5 rounded" style="background:#111;color:#fff;"></div>
-      <div id="panel-item-name" class="text-[12px] font-bold text-gray-800 truncate flex-1">—</div>
-      <div id="panel-price-badge" class="hidden text-[11px] font-bold text-white px-2 py-0.5 rounded flex-shrink-0" style="background:#e8211a;"></div>
-    </div>
-
-    <!-- ── FOMO バー ──────────────────────────────────── -->
-    <div id="fomo-bar" class="fomo-bar flex-shrink-0" style="display:none;">
-      <span id="fomo-icon"></span>
-      <span id="fomo-text"></span>
-      <span class="fomo-dot"></span>
-    </div>
-
-    <!-- ── スクロール領域 ─────────────────────────────── -->
-    <div class="panel-scroll flex-1 overflow-y-auto">
-
-      <!-- ① StockX ────────────────────────────────────── -->
-      <div class="px-4 pt-3 pb-3 border-b border-gray-100">
-        <a id="stockx-btn" href="#" target="_blank" rel="noopener"
-          class="flex items-center justify-between w-full px-4 py-3 rounded-xl no-underline transition-all duration-150 hover:opacity-90"
-          style="background:#00ad55;">
-          <div class="leading-tight">
-            <div class="text-[14px] font-extrabold text-white">StockX</div>
-            <div class="text-[10px] text-white opacity-70 mt-0.5">世界相場の基準 — 最安値を確認</div>
-          </div>
-          <span class="text-white text-xl opacity-60 ml-3">→</span>
-        </a>
+    <!-- アイテム情報 -->
+    <div class="panel-info">
+      <div class="panel-info-meta">
+        <span id="panel-year-badge"></span>
       </div>
+      <div id="panel-title">—</div>
+    </div>
 
-      <!-- ② 楽天アフィリエイト（主力CTA） ────────────── -->
-      <div class="px-4 pt-4 pb-3 border-b border-red-100" style="background:#FFF5F5;">
-        <!-- 楽天ヘッダー -->
-        <div class="flex items-center gap-2 mb-3">
-          <span class="bg-[#BF0000] text-white text-[10px] font-black px-2.5 py-[3px] rounded">楽天市場</span>
-          <span class="text-[11px] font-bold text-[#BF0000]">ポイントが使える・貯まる</span>
-        </div>
-        <!-- 楽天ボタン群 -->
-        <div id="rakuten-list" class="flex flex-col gap-[6px]">
-          <a class="r-shop-btn group flex items-center justify-between bg-[#BF0000] hover:bg-[#A50000] text-white px-4 py-3 rounded-xl no-underline transition-all duration-150 hover:shadow-lg hover:translate-x-0.5" data-r-tpl="https://hb.afl.rakuten.co.jp/hgc/51914ad6.2984967f.51914ad7.e99e7adc/?pc=https%3A%2F%2Fsearch.rakuten.co.jp%2Fsearch%2Fmall%2Fsupreme%2B{q}%2F" href="#" target="_blank" rel="noopener sponsored"><div class="leading-tight"><div class="text-[13px] font-extrabold">セカスト 楽天市場店</div><div class="text-[10px] opacity-70 mt-0.5">圧倒的在庫量 × ポイント還元</div></div><span class="text-xl opacity-50 flex-shrink-0 ml-3 group-hover:translate-x-1 transition-transform">→</span></a>
-<a class="r-shop-btn group flex items-center justify-between bg-[#BF0000] hover:bg-[#A50000] text-white px-4 py-3 rounded-xl no-underline transition-all duration-150 hover:shadow-lg hover:translate-x-0.5" data-r-tpl="https://hb.afl.rakuten.co.jp/hgc/51914ad6.2984967f.51914ad7.e99e7adc/?pc=https%3A%2F%2Fsearch.rakuten.co.jp%2Fsearch%2Fmall%2Fsupreme%2B{q}%2F" href="#" target="_blank" rel="noopener sponsored"><div class="leading-tight"><div class="text-[13px] font-extrabold">カインドオル 楽天市場店</div><div class="text-[10px] opacity-70 mt-0.5">アーカイブ特化 × ポイント</div></div><span class="text-xl opacity-50 flex-shrink-0 ml-3 group-hover:translate-x-1 transition-transform">→</span></a>
-<a class="r-shop-btn group flex items-center justify-between bg-[#BF0000] hover:bg-[#A50000] text-white px-4 py-3 rounded-xl no-underline transition-all duration-150 hover:shadow-lg hover:translate-x-0.5" data-r-tpl="https://hb.afl.rakuten.co.jp/hgc/51914ad6.2984967f.51914ad7.e99e7adc/?pc=https%3A%2F%2Fsearch.rakuten.co.jp%2Fsearch%2Fmall%2Fsupreme%2B{q}%2F" href="#" target="_blank" rel="noopener sponsored"><div class="leading-tight"><div class="text-[13px] font-extrabold">リンカン 楽天市場店</div><div class="text-[10px] opacity-70 mt-0.5">ハイエンド品質保証 × ポイント</div></div><span class="text-xl opacity-50 flex-shrink-0 ml-3 group-hover:translate-x-1 transition-transform">→</span></a>
-<a class="r-shop-btn group flex items-center justify-between bg-[#BF0000] hover:bg-[#A50000] text-white px-4 py-3 rounded-xl no-underline transition-all duration-150 hover:shadow-lg hover:translate-x-0.5" data-r-tpl="https://hb.afl.rakuten.co.jp/hgc/51914ad6.2984967f.51914ad7.e99e7adc/?pc=https%3A%2F%2Fsearch.rakuten.co.jp%2Fsearch%2Fmall%2Fsupreme%2B{q}%2F" href="#" target="_blank" rel="noopener sponsored"><div class="leading-tight"><div class="text-[13px] font-extrabold">トレファク 楽天市場店</div><div class="text-[10px] opacity-70 mt-0.5">掘り出し物あり × ポイント</div></div><span class="text-xl opacity-50 flex-shrink-0 ml-3 group-hover:translate-x-1 transition-transform">→</span></a>
-        </div>
-        <p class="text-[10px] text-[#BF0000] text-right mt-2.5 font-semibold opacity-80">
-          ※ 楽天ポイント最大還元でお得に購入
-        </p>
-      </div>
-
-    </div><!-- /panel-scroll -->
-
-    <!-- ③ 買取アフィリエイト（底部 Sticky バー） ──── -->
-    <div class="kaitori-sticky flex-shrink-0 px-4 pt-3 pb-4" style="background:linear-gradient(135deg,#111 0%,#222 100%); box-shadow:0 -4px 20px rgba(0,0,0,0.35);">
-      <div class="flex items-center justify-between mb-2">
+    <!-- CTAボタン群 (3つのみ) -->
+    <div class="panel-ctas">
+      <a id="stockx-btn" href="#" target="_blank" rel="noopener"
+        class="panel-cta cta-stockx">
         <div>
-          <p class="text-[13px] font-black text-white leading-snug">
-            あなたの<span class="text-yellow-400">Supreme</span>、今いくら？
-          </p>
-          <p class="text-[10px] mt-0.5" style="color:rgba(255,255,255,0.4);">送料無料・最短翌日査定・業界最高水準</p>
+          <div class="panel-cta-main">StockX</div>
+          <div class="panel-cta-sub">世界相場の基準</div>
         </div>
-        <div class="kaitori-pulse-ring flex-shrink-0 ml-3">
-          <span class="text-yellow-400 text-xl">💰</span>
-        </div>
-      </div>
-      <!-- メインCTA（大） -->
-      <a id="kaitori-main-btn" href="https://kaitori.rinkan.co.jp/" target="_blank" rel="noopener sponsored"
-        class="kaitori-main-cta block w-full text-center py-3 rounded-xl font-black text-[14px] text-gray-900 no-underline mb-2"
-        style="background:linear-gradient(90deg,#facc15,#fbbf24); letter-spacing:0.04em;">
-        📦 高額査定を依頼する →
+        <span class="panel-cta-arr">→</span>
       </a>
-      <!-- サブCTAボタン群 -->
-      <div class="flex gap-2">
-        <a class="flex-1 py-2.5 px-2 bg-yellow-400 hover:bg-yellow-300 text-gray-900 rounded-lg text-center transition-colors no-underline" href="https://kaitori.rinkan.co.jp/" target="_blank" rel="noopener sponsored"><div class="text-[11px] font-bold leading-tight">RINKAN 宅配買取</div><div class="text-[9px] opacity-60 mt-0.5">業界最高水準・送料無料</div></a>
-<a class="flex-1 py-2.5 px-2 bg-white/10 hover:bg-white/20 border border-white/20 text-white rounded-lg text-center transition-colors no-underline" href="https://www.brandia.net/" target="_blank" rel="noopener sponsored"><div class="text-[11px] font-bold leading-tight">ブランディア</div><div class="text-[9px] opacity-60 mt-0.5">最大10社一括比較</div></a>
-<a class="flex-1 py-2.5 px-2 bg-white/10 hover:bg-white/20 border border-white/20 text-white rounded-lg text-center transition-colors no-underline" href="https://buysell-technologies.com/" target="_blank" rel="noopener sponsored"><div class="text-[11px] font-bold leading-tight">バイセル</div><div class="text-[9px] opacity-60 mt-0.5">最短翌日査定</div></a>
-      </div>
+      <a id="rakuten-btn" href="#" target="_blank" rel="noopener sponsored"
+        class="panel-cta cta-rakuten">
+        <div>
+          <div class="panel-cta-main">楽天市場</div>
+          <div class="panel-cta-sub">ポイントが貯まる・使える</div>
+        </div>
+        <span class="panel-cta-arr">→</span>
+      </a>
+      <a href="https://kaitori.rinkan.co.jp/" target="_blank" rel="noopener sponsored"
+        class="panel-cta cta-rinkan">
+        <div>
+          <div class="panel-cta-main">RINKAN 宅配買取</div>
+          <div class="panel-cta-sub">業界最高水準・送料無料</div>
+        </div>
+        <span class="panel-cta-arr">→</span>
+      </a>
     </div>
 
   </aside>
@@ -5008,18 +4961,16 @@
   let currentItem    = null;
 
   // ── DOM refs ──────────────────────────────────────────────────
-  const gridWrap        = document.getElementById('grid-wrap');
-  const grid            = document.getElementById('lookbook-grid');
-  const panel           = document.getElementById('price-panel');
-  const panelClose      = document.getElementById('panel-close');
-  const panelTitle      = document.getElementById('panel-title');
-  const panelImg        = document.getElementById('panel-img');
-  const panelItemName   = document.getElementById('panel-item-name');
-  const panelYearBadge  = document.getElementById('panel-year-badge');
-  const panelPriceBadge = document.getElementById('panel-price-badge');
-  const shownCount      = document.getElementById('shown-count');
-  const emptyMsg        = document.getElementById('empty-msg');
-  const backdrop        = document.getElementById('panel-backdrop');
+  const gridWrap       = document.getElementById('grid-wrap');
+  const grid           = document.getElementById('lookbook-grid');
+  const panel          = document.getElementById('price-panel');
+  const panelClose     = document.getElementById('panel-close');
+  const panelTitle     = document.getElementById('panel-title');
+  const panelImg       = document.getElementById('panel-img');
+  const panelYearBadge = document.getElementById('panel-year-badge');
+  const shownCount     = document.getElementById('shown-count');
+  const emptyMsg       = document.getElementById('empty-msg');
+  const backdrop       = document.getElementById('panel-backdrop');
 
   // Supreme製品キーワード（Pythonの_product_name()と同ロジック）
   const PRODUCT_KW = /(hoodie|hooded|sweatshirt|crewneck|pullover|zip|quarter.?zip|jacket|parka|anorak|coach|varsity|fleece|vest|coat|shirt|flannel|oxford|tee|t.shirt|jersey|pants|shorts|denim|chino|sweatpant|jogger|cap|hat|beanie|balaclava|scarf|glove|sock|belt|bag|backpack|tote|side.?bag|shoulder|box.?logo|bogo|camp.?cap|5.?panel|strapback|trucker|north.?face|levis|comme|lacoste|timberland|vans|nike|jordan|new.?era|skateboard|deck)/i;
@@ -5137,101 +5088,43 @@
   });
 
 
-  // ── FOMO マイクロコピー ────────────────────────────────────────
-  const FOMO_MSGS = [
-    ['🔥', '過去24時間で{n}人がチェック'],
-    ['📈', '現在の入札数が急増中！'],
-    ['👀', '今{n}人が同時に閲覧中'],
-    ['⚡', '直近1時間で価格が上昇傾向'],
-    ['🕐', '在庫が減少しています — 早めの確認を'],
-    ['💫', 'このシーズンのレア度: 高'],
-    ['🚨', '{n}人がウォッチリストに追加済み'],
-    ['📊', '直近7日間で{n}件の取引を確認'],
-  ];
-
-  let fomoTimer = null;
-
-  function showFomo(itemId) {
-    const bar  = document.getElementById('fomo-bar');
-    const icon = document.getElementById('fomo-icon');
-    const text = document.getElementById('fomo-text');
-
-    // item.id を使った疑似ランダム（同じアイテムは毎回同じメッセージ）
-    const seed = (itemId * 2654435761) >>> 0;
-    const [emoji, template] = FOMO_MSGS[seed % FOMO_MSGS.length];
-    const n = 2 + (seed >> 4) % 9;   // 2〜10 の数字
-    const msg = template.replace('{n}', n);
-
-    icon.textContent = emoji;
-    text.textContent = msg;
-
-    bar.classList.remove('hiding');
-    bar.style.display = 'flex';
-
-    if (fomoTimer) clearTimeout(fomoTimer);
-    fomoTimer = setTimeout(() => {
-      bar.classList.add('hiding');
-      fomoTimer = setTimeout(() => { bar.style.display = 'none'; }, 400);
-    }, 3800);
-  }
-
   // ── Price Panel ───────────────────────────────────────────────
+  const _STOCKX_AFF = 'utm_source=af&utm_medium=imp&utm_campaign=2508955&utm_content=_530344&irgwc=1&afsrc=1';
+  const _RAKUTEN_AF_ID = '51914ad6.2984967f.51914ad7.e99e7adc';
+
   function openPanel(item) {
     currentItem = item;
-
-    // ヘッダー: アイテム名
-    const seasonLabel = [item.year, item.season].filter(Boolean).join(' ');
-    panelTitle.textContent = productName(item) || item.title || 'Supreme Item';
 
     // 画像
     panelImg.src = item.img;
     panelImg.alt = item.title || '';
 
-    // アイテム情報バー
-    const name = productName(item);
-    panelItemName.textContent = name || '';
-
+    // 年バッジ
     if (item.year) {
-      panelYearBadge.textContent = item.year;
-      panelYearBadge.classList.remove('hidden');
+      panelYearBadge.textContent = [item.year, item.season].filter(Boolean).join(' ');
+      panelYearBadge.style.display = 'inline-block';
     } else {
-      panelYearBadge.classList.add('hidden');
+      panelYearBadge.style.display = 'none';
     }
 
-    if (item.price) {
-      panelPriceBadge.textContent = item.price;
-      panelPriceBadge.classList.remove('hidden');
-    } else {
-      panelPriceBadge.classList.add('hidden');
-    }
+    // タイトル（折り返しあり・切れない）
+    const name = productName(item);
+    panelTitle.textContent = name || item.title || 'Supreme Item';
 
+    // アフィリエイトURL
     const q = encodeURIComponent(item.q || item.title || 'supreme');
+    const stockxUrl = 'https://stockx.com/ja-jp/search?s=supreme+' + q + '&' + _STOCKX_AFF;
+    const rakutenShopUrl = 'https://search.rakuten.co.jp/search/mall/supreme+' + q + '/';
+    const rakutenUrl = 'https://hb.afl.rakuten.co.jp/hgc/' + _RAKUTEN_AF_ID + '/?pc=' + encodeURIComponent(rakutenShopUrl);
 
-    // StockX Impact アフィリエイト検索URL
-    const STOCKX_AFF_PARAMS = 'utm_source=af&utm_medium=imp&utm_campaign=2508955&utm_content=_530344&irgwc=1&afsrc=1&ir_campaignid=9060&ir_adid=530344&ir_partnerid=2508955';
-    const stockxSearchUrl = 'https://stockx.com/ja-jp/search?s=supreme+' + q + '&' + STOCKX_AFF_PARAMS;
-
-    // ① StockX ボタンを更新
-    const stockxBtn = document.getElementById('stockx-btn');
-    if (stockxBtn) {
-      stockxBtn.href = stockxSearchUrl;
-    }
-
-    // ② 楽天アフィリエイトリンクを更新
-    document.querySelectorAll('.r-shop-btn').forEach((btn, idx) => {
-      const shop = RAKUTEN_SHOPS[idx];
-      if (!shop) return;
-      btn.href = shop.url_tpl.replace('{q}', q);
-    });
-
-    // 買取ボタンは静的URLのまま（変更不要）
+    document.getElementById('stockx-btn').href = stockxUrl;
+    document.getElementById('rakuten-btn').href = rakutenUrl;
 
     panel.classList.add('open');
     gridWrap.classList.add('panel-open');
     panelOpen = true;
     document.body.style.overflow = 'hidden';
     backdrop.classList.add('visible');
-    showFomo(item.id);
 
     document.querySelectorAll('.grid-item').forEach(el => el.classList.remove('selected'));
     document.querySelector(`[data-id="${item.id}"]`)?.classList.add('selected');
