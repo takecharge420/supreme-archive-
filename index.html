@@ -4404,6 +4404,44 @@
     .filter-chip.active { background: var(--text); color: var(--white); border-color: var(--text); }
     .filter-sep { width: 1px; height: 18px; background: var(--border); margin: 0 4px; }
 
+    /* ── Search Bar ─────────────────────────────────── */
+    .search-bar-wrap {
+      padding: 10px 16px;
+      border-bottom: 1px solid var(--border);
+      background: #fff;
+    }
+    .search-bar-inner {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      background: var(--gray);
+      border-radius: 10px;
+      padding: 0 12px;
+      max-width: 480px;
+    }
+    .search-icon {
+      width: 16px; height: 16px;
+      color: var(--dim);
+      flex-shrink: 0;
+    }
+    #search-input {
+      flex: 1;
+      border: none;
+      background: none;
+      outline: none;
+      font-size: 13px;
+      color: var(--text);
+      padding: 9px 0;
+      min-width: 0;
+    }
+    #search-input::placeholder { color: var(--dim); }
+    #search-clear {
+      border: none; background: none; cursor: pointer;
+      color: var(--dim); font-size: 13px; padding: 4px;
+      display: none; line-height: 1;
+    }
+    #search-clear.visible { display: block; }
+
     /* ── Main Layout ─────────────────────────────────── */
     .layout {
       display: flex;
@@ -4876,6 +4914,18 @@
 <button class="season-tab" data-year="2002">2002</button>
   </nav>
 
+  <!-- Search Bar -->
+  <div class="search-bar-wrap">
+    <div class="search-bar-inner">
+      <svg class="search-icon" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <circle cx="8.5" cy="8.5" r="5.5" stroke="currentColor" stroke-width="1.6"/>
+        <path d="M13 13L17 17" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
+      </svg>
+      <input id="search-input" type="search" placeholder="商品名で検索 (例: box logo, hoodie...)" autocomplete="off" spellcheck="false">
+      <button id="search-clear" aria-label="クリア">✕</button>
+    </div>
+  </div>
+
   <!-- Layout -->
   <div class="layout">
     <!-- Category Nav -->
@@ -5048,6 +5098,7 @@
   let activeSeason   = '';
   let activePlatform = '';
   let activeCategory = '';
+  let searchQuery    = '';
   let panelOpen      = false;
   let currentItem    = null;
 
@@ -5134,12 +5185,18 @@
   }
 
   function applyFilters() {
-    // 年別キャッシュがあればそちらを使う（高速化）
-    const source = yearCache[activeYear] || ITEMS;
+    // 検索中は全データから検索、それ以外は年別キャッシュを活用
+    const source = searchQuery ? ITEMS : (yearCache[activeYear] || ITEMS);
+    const tokens = searchQuery ? searchQuery.toLowerCase().split(/\s+/).filter(Boolean) : [];
     filteredItems = source.filter(item => {
-      const yearOk = activeYear === 'all' || String(item.year) === String(activeYear);
-      const catOk  = !activeCategory || item.cat === activeCategory;
-      return yearOk && catOk;
+      const yearOk  = activeYear === 'all' || String(item.year) === String(activeYear);
+      const catOk   = !activeCategory || item.cat === activeCategory;
+      if (!catOk) return false;
+      if (tokens.length) {
+        const hay = ((item.title || '') + ' ' + (item.cat || '') + ' ' + (item.year || '')).toLowerCase();
+        return tokens.every(t => hay.includes(t));
+      }
+      return yearOk;
     });
     renderItems(false);
   }
@@ -5150,6 +5207,27 @@
     if (entries[0].isIntersecting && renderedCount < filteredItems.length) renderItems(true);
   }, { rootMargin: '400px' });
   scrollObs.observe(sentinel);
+
+  // Search
+  const searchInput = document.getElementById('search-input');
+  const searchClear = document.getElementById('search-clear');
+  let searchTimer;
+  searchInput.addEventListener('input', () => {
+    const val = searchInput.value.trim();
+    searchClear.classList.toggle('visible', val.length > 0);
+    clearTimeout(searchTimer);
+    searchTimer = setTimeout(() => {
+      searchQuery = val;
+      applyFilters();
+    }, 200);
+  });
+  searchClear.addEventListener('click', () => {
+    searchInput.value = '';
+    searchQuery = '';
+    searchClear.classList.remove('visible');
+    searchInput.focus();
+    applyFilters();
+  });
 
   // Year tabs — 年別JSONを遅延ロード
   document.querySelectorAll('.season-tab').forEach(btn => {
