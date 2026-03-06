@@ -5182,6 +5182,10 @@
     grid.appendChild(frag);
     shownCount.textContent = filteredItems.length;
     emptyMsg.style.display = filteredItems.length === 0 ? 'block' : 'none';
+    // 新規追加されたlazy-img要素をImgObserverに登録
+    if (typeof imgObs !== 'undefined') {
+      grid.querySelectorAll('img.lazy-img[data-src]').forEach(img => imgObs.observe(img));
+    }
   }
 
   function applyFilters() {
@@ -5221,13 +5225,6 @@
       imgObs.unobserve(img);
     });
   }, { rootMargin: '200px' });
-
-  // renderItems後に新規img要素を監視登録
-  const _origRenderItems = renderItems;
-  function renderItems(append) {
-    _origRenderItems(append);
-    grid.querySelectorAll('img.lazy-img[data-src]').forEach(img => imgObs.observe(img));
-  }
 
   // Search
   const searchInput = document.getElementById('search-input');
