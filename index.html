@@ -4882,7 +4882,7 @@
       <span class="item-count" id="shown-count">12201</span>
       <span>件</span>
       <span>·</span>
-      <span>2026-03-06</span>
+      <span>2026-03-07</span>
     </div>
   </header>
 
@@ -4990,82 +4990,82 @@
     <!-- CTAボタン群 -->
     <div class="panel-ctas">
 
-      <!-- 相場確認 -->
-      <p class="panel-sec-label">相場・在庫を確認</p>
+      <!-- Check market price -->
+      <p class="panel-sec-label">Check Market Price</p>
       <a id="stockx-btn" href="#" target="_blank" rel="noopener" class="panel-cta cta-stockx">
         <div class="cta-left">
           <span class="cta-name">StockX</span>
-          <span class="cta-micro">世界取引データで相場をチェック</span>
+          <span class="cta-micro">Global trade data — real market price</span>
         </div>
         <div class="cta-right">
-          <span class="cta-badge">世界基準</span>
+          <span class="cta-badge">Global</span>
           <span class="cta-arr">›</span>
         </div>
       </a>
 
-      <!-- 中古品を探す -->
-      <p class="panel-sec-label">中古品を探す</p>
+      <!-- Buy second hand -->
+      <p class="panel-sec-label">Buy Second Hand</p>
       <a id="mercari-btn" href="#" target="_blank" rel="noopener" class="panel-cta cta-mercari">
         <div class="cta-left">
-          <span class="cta-name">メルカリ</span>
-          <span class="cta-micro">個人出品で最安値が見つかる</span>
+          <span class="cta-name">Mercari</span>
+          <span class="cta-micro">Individual listings — often the lowest price</span>
         </div>
         <div class="cta-right">
-          <span class="cta-badge">中古</span>
+          <span class="cta-badge">Second Hand</span>
           <span class="cta-arr">›</span>
         </div>
       </a>
       <a href="#" target="_blank" rel="noopener sponsored" class="panel-cta cta-2ndst r-shop-btn">
         <div class="cta-left">
           <span class="cta-name">2nd STREET</span>
-          <span class="cta-micro">圧倒的在庫量・即日発送あり</span>
+          <span class="cta-micro">Huge stock · same-day shipping available</span>
         </div>
         <div class="cta-right">
-          <span class="cta-badge">中古</span>
+          <span class="cta-badge">Second Hand</span>
           <span class="cta-arr">›</span>
         </div>
       </a>
       <a href="#" target="_blank" rel="noopener sponsored" class="panel-cta cta-rinkan r-shop-btn">
         <div class="cta-left">
           <span class="cta-name">RINKAN</span>
-          <span class="cta-micro">ハイエンド品質・正規品保証</span>
+          <span class="cta-micro">Premium quality · authenticity guaranteed</span>
         </div>
         <div class="cta-right">
-          <span class="cta-badge">中古</span>
+          <span class="cta-badge">Second Hand</span>
           <span class="cta-arr">›</span>
         </div>
       </a>
       <a href="#" target="_blank" rel="noopener sponsored" class="panel-cta cta-treasure r-shop-btn">
         <div class="cta-left">
-          <span class="cta-name">トレジャーファクトリー</span>
-          <span class="cta-micro">掘り出し物が眠ってる</span>
+          <span class="cta-name">Treasure Factory</span>
+          <span class="cta-micro">Hidden gems waiting to be found</span>
         </div>
         <div class="cta-right">
-          <span class="cta-badge">中古</span>
+          <span class="cta-badge">Second Hand</span>
           <span class="cta-arr">›</span>
         </div>
       </a>
       <a href="#" target="_blank" rel="noopener sponsored" class="panel-cta cta-kindal r-shop-btn">
         <div class="cta-left">
-          <span class="cta-name">カインドオル</span>
-          <span class="cta-micro">アーカイブ品揃えNo.1</span>
+          <span class="cta-name">Kindal</span>
+          <span class="cta-micro">Best archive selection in Japan</span>
         </div>
         <div class="cta-right">
-          <span class="cta-badge">中古</span>
+          <span class="cta-badge">Second Hand</span>
           <span class="cta-arr">›</span>
         </div>
       </a>
 
-      <!-- 売る -->
-      <p class="panel-sec-label">手放すなら高く売る</p>
+      <!-- Sell -->
+      <p class="panel-sec-label">Sell Your Piece</p>
       <a href="https://kaitori.rinkan.co.jp/" target="_blank" rel="noopener sponsored"
         class="panel-cta cta-kaitori">
         <div class="cta-left">
-          <span class="cta-name">RINKAN 宅配買取</span>
-          <span class="cta-micro">無料査定・送料無料・最短翌日</span>
+          <span class="cta-name">RINKAN Buy-Back</span>
+          <span class="cta-micro">Free appraisal · free shipping · next-day payout</span>
         </div>
         <div class="cta-right">
-          <span class="cta-badge">無料</span>
+          <span class="cta-badge">Free</span>
           <span class="cta-arr">›</span>
         </div>
       </a>
@@ -5079,7 +5079,7 @@
 
   <!-- Footer -->
   <footer class="site-footer">
-    Supreme Archive — 12201 items · 2026-03-06<br>
+    Supreme Archive — 12201 items · 2026-03-07<br>
     All images © their respective owners.<br>
     <a href="/privacy.html" style="color:var(--dim);text-decoration:underline;font-size:11px;">プライバシーポリシー</a>
     &nbsp;·&nbsp;
@@ -5166,7 +5166,7 @@
     fig.innerHTML =
       `<div class="grid-img-wrap">` +
       seoLink +
-      `<img src="${escHtml(proxyImg(item.img, 400))}" alt="${escHtml((item.title||'Supreme Item').slice(0,120))}" loading="lazy">` +
+      `<img data-src="${escHtml(proxyImg(item.img, 400))}" src="" alt="${escHtml((item.title||'Supreme Item').slice(0,120))}" class="lazy-img">` +
       `${seasonBadge}${infoHtml}` +
       `<div class="grid-hover"><span class="hover-label">CHECK →</span></div>` +
       `</div><figcaption class="sr-only">${escHtml(item.title||'')}</figcaption>`;
@@ -5207,6 +5207,27 @@
     if (entries[0].isIntersecting && renderedCount < filteredItems.length) renderItems(true);
   }, { rootMargin: '400px' });
   scrollObs.observe(sentinel);
+
+  // 画像 lazy load（data-src → src をビューポート手前で切り替え）
+  const imgObs = new IntersectionObserver(entries => {
+    entries.forEach(entry => {
+      if (!entry.isIntersecting) return;
+      const img = entry.target;
+      const src = img.dataset.src;
+      if (src) {
+        img.src = src;
+        img.removeAttribute('data-src');
+      }
+      imgObs.unobserve(img);
+    });
+  }, { rootMargin: '200px' });
+
+  // renderItems後に新規img要素を監視登録
+  const _origRenderItems = renderItems;
+  function renderItems(append) {
+    _origRenderItems(append);
+    grid.querySelectorAll('img.lazy-img[data-src]').forEach(img => imgObs.observe(img));
+  }
 
   // Search
   const searchInput = document.getElementById('search-input');
