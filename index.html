@@ -4,9 +4,12 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
   <title>SUPREME ARCHIVE — 歴代ルックブック完全網羅</title>
-  <meta name="description" content="Supreme 2009〜2026年 全12201アイテムのルックブック。Box Logo・ジャケット・Tシャツなど歴代コレクションを年代別に網羅。">
+  <meta name="description" content="Supreme 2009〜2026年 全10833アイテムのルックブック。Box Logo・ジャケット・Tシャツなど歴代コレクションを年代別に網羅。">
   <!-- Canonical -->
   <link rel="canonical" href="https://supremearchive.site/">
+  <!-- 画像プロキシへの事前接続 -->
+  <link rel="preconnect" href="https://wsrv.nl">
+  <link rel="dns-prefetch" href="https://wsrv.nl">
   <!-- Favicon -->
   <link rel="icon" href="/favicon.svg" type="image/svg+xml">
   <link rel="apple-touch-icon" href="/apple-touch-icon.png">
@@ -14,14 +17,14 @@
   <meta property="og:type"        content="website">
   <meta property="og:site_name"   content="SUPREME ARCHIVE">
   <meta property="og:title"       content="SUPREME ARCHIVE — 歴代ルックブック完全網羅">
-  <meta property="og:description" content="Supreme 2009〜2026年 全12201アイテムのルックブック。歴代コレクションを年代別に網羅。">
+  <meta property="og:description" content="Supreme 2009〜2026年 全10833アイテムのルックブック。歴代コレクションを年代別に網羅。">
   <meta property="og:url"         content="https://supremearchive.site/">
   <meta property="og:image"       content="https://supremearchive.site/ogp.jpg">
   <meta property="og:locale"      content="ja_JP">
   <!-- Twitter Card -->
   <meta name="twitter:card"        content="summary_large_image">
   <meta name="twitter:title"       content="SUPREME ARCHIVE — 歴代ルックブック完全網羅">
-  <meta name="twitter:description" content="Supreme 2009〜2026年 全12201アイテムのルックブック。歴代コレクションを年代別に網羅。">
+  <meta name="twitter:description" content="Supreme 2009〜2026年 全10833アイテムのルックブック。歴代コレクションを年代別に網羅。">
   <meta name="twitter:image"       content="https://supremearchive.site/ogp.jpg">
   <!-- AI学習・スクレイピング拒否 -->
   <meta name="robots" content="noai, noimageai">
@@ -58,12 +61,12 @@
   "@context": "https://schema.org",
   "@type": "CollectionPage",
   "name": "Supreme Lookbook Archive — 歴代コレクション完全網羅",
-  "description": "Supreme 2009年〜2026年 全12201アイテムのルックブック。歴代コレクションを年代別に完全網羅。",
+  "description": "Supreme 2009年〜2026年 全10833アイテムのルックブック。歴代コレクションを年代別に完全網羅。",
   "inLanguage": "ja",
   "mainEntity": {
     "@type": "ItemList",
     "name": "Supreme Archive ItemList",
-    "numberOfItems": 12201,
+    "numberOfItems": 10833,
     "itemListElement": [
       {
         "@type": "ListItem",
@@ -4890,10 +4893,10 @@
   <header class="site-header">
     <a class="site-logo" href="#">Supreme<span>Archive</span></a>
     <div class="header-right">
-      <span class="item-count" id="shown-count">12201</span>
+      <span class="item-count" id="shown-count">10833</span>
       <span>件</span>
       <span>·</span>
-      <span>2026-03-07</span>
+      <span>2026-03-20</span>
     </div>
   </header>
 
@@ -4985,9 +4988,12 @@
              display:flex;align-items:center;justify-content:center;
              -webkit-tap-highlight-color:transparent;">✕</button>
 
-    <!-- 画像: 全幅・大きく -->
+    <!-- 画像: 全幅・大きく（クリックで個別ページへ） -->
     <div class="panel-img-box">
-      <img id="panel-img" src="" alt="" loading="lazy">
+      <a id="panel-img-link" href="#" target="_blank" rel="noopener"
+         style="display:block;width:100%;height:100%;cursor:pointer;">
+        <img id="panel-img" src="" alt="" loading="lazy">
+      </a>
     </div>
 
     <!-- アイテム情報 -->
@@ -5090,7 +5096,7 @@
 
   <!-- Footer -->
   <footer class="site-footer">
-    Supreme Archive — 12201 items · 2026-03-07<br>
+    Supreme Archive — 10833 items · 2026-03-20<br>
     All images © their respective owners.<br>
     <a href="/privacy.html" style="color:var(--dim);text-decoration:underline;font-size:11px;">プライバシーポリシー</a>
     &nbsp;·&nbsp;
@@ -5121,12 +5127,13 @@
   const panelTitle     = document.getElementById('panel-title');
   const panelImg       = document.getElementById('panel-img');
   const panelYearBadge = document.getElementById('panel-year-badge');
+  const panelImgLink   = document.getElementById('panel-img-link');
   const shownCount     = document.getElementById('shown-count');
   const emptyMsg       = document.getElementById('empty-msg');
   const backdrop       = document.getElementById('panel-backdrop');
 
   // Supreme製品キーワード（Pythonの_product_name()と同ロジック）
-  const PRODUCT_KW = /(hoodie|hooded|sweatshirt|crewneck|pullover|zip|quarter.?zip|jacket|parka|anorak|coach|varsity|fleece|vest|coat|shirt|flannel|oxford|tee|t.shirt|jersey|pants|shorts|denim|chino|sweatpant|jogger|cap|hat|beanie|balaclava|scarf|glove|sock|belt|bag|backpack|tote|side.?bag|shoulder|box.?logo|bogo|camp.?cap|5.?panel|strapback|trucker|north.?face|levis|comme|lacoste|timberland|vans|nike|jordan|new.?era|skateboard|deck)/i;
+  const PRODUCT_KW = /(hoodie|hooded|sweatshirt|crewneck|pullover|zip|quarter.?zip|jacket|parka|anorak|coach|varsity|fleece|vest|coat|shirt|flannel|oxford|tee|t.shirt|jersey|top|sweater|polo|rugby|pants|shorts|denim|chino|sweatpant|jogger|cap|hat|beanie|balaclava|scarf|glove|sock|belt|bag|backpack|tote|side.?bag|shoulder|box.?logo|bogo|camp.?cap|\d.?panel|strapback|trucker|north.?face|levis|comme|lacoste|timberland|vans|nike|jordan|new.?era|skateboard|deck)/i;
   const GENERIC_KW = /(lookbook|ルックブック|が公開|掲載中|掲載|collection|archive|official|spring.?summer|fall.?winter|s\/s|f\/w|ss|fw|aw)/i;
 
   // アイテムから商品名を取得（プラットフォーム考慮）
@@ -5135,8 +5142,11 @@
     const decoded = item.title.replace(/&([a-z]+|#\d+);/gi, c => {
       const tmp = document.createElement('span'); tmp.innerHTML = c; return tmp.textContent;
     });
-    if (GENERIC_KW.test(decoded)) return '';
-    if (!PRODUCT_KW.test(decoded)) return '';
+    // supsupsup / supnyplus は商品DBなのでフィルタスキップ
+    if (item.platform !== 'supsupsup' && item.platform !== 'supnyplus') {
+      if (GENERIC_KW.test(decoded)) return '';
+      if (!PRODUCT_KW.test(decoded)) return '';
+    }
     const clean = decoded
       .replace(/supreme|\d{4}|\d{2}(ss|fw|aw)|spring|summer|fall|winter|\//gi, ' ')
       .replace(/\s+/g, ' ').trim().replace(/^[-—#@·\s]+|[-—#@·\s]+$/g, '');
@@ -5159,6 +5169,9 @@
       + '&w=' + width + '&output=webp&q=85&n=-1';
   }
 
+  let _eagerCount = 0;
+  const EAGER_LIMIT = 20;
+
   function createGridItem(item) {
     const fig = document.createElement('figure');
     fig.className = 'grid-item';
@@ -5177,7 +5190,9 @@
     fig.innerHTML =
       `<div class="grid-img-wrap">` +
       seoLink +
-      `<img data-src="${escHtml(proxyImg(item.img, 400))}" src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" alt="${escHtml((item.title||'Supreme Item').slice(0,120))}" class="lazy-img">` +
+      (_eagerCount++ < EAGER_LIMIT
+        ? `<img src="${escHtml(proxyImg(item.img, 400))}" alt="${escHtml((item.title||'Supreme Item').slice(0,120))}" class="lazy-img">`
+        : `<img data-src="${escHtml(proxyImg(item.img, 400))}" src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" alt="${escHtml((item.title||'Supreme Item').slice(0,120))}" class="lazy-img">`) +
       `${seasonBadge}${infoHtml}` +
       `<div class="grid-hover"><span class="hover-label">CHECK →</span></div>` +
       `</div><figcaption class="sr-only">${escHtml(item.title||'')}</figcaption>`;
@@ -5185,7 +5200,7 @@
   }
 
   function renderItems(append) {
-    if (!append) { grid.innerHTML = ''; renderedCount = 0; }
+    if (!append) { grid.innerHTML = ''; renderedCount = 0; _eagerCount = 0; }
     const frag = document.createDocumentFragment();
     const end  = Math.min(renderedCount + PAGE_SIZE, filteredItems.length);
     for (let i = renderedCount; i < end; i++) frag.appendChild(createGridItem(filteredItems[i]));
@@ -5203,6 +5218,7 @@
     // 検索中は全データから検索、それ以外は年別キャッシュを活用
     const source = searchQuery ? ITEMS : (yearCache[activeYear] || ITEMS);
     const tokens = searchQuery ? searchQuery.toLowerCase().split(/\s+/).filter(Boolean) : [];
+    const _LOGO_RE = /(box.?logo|bogo|logo.?hood|logo.?crew|logo.?tee|logo.?zip|logo.?parka|logo.?jacket|logo.?cap|logo.?hat|logo.?bag|logo.?fleece|logo.?crewneck|logo.?sweat)/i;
     filteredItems = source.filter(item => {
       const yearOk  = activeYear === 'all' || String(item.year) === String(activeYear);
       const catOk   = !activeCategory || item.cat === activeCategory;
@@ -5212,6 +5228,12 @@
         return tokens.every(t => hay.includes(t));
       }
       return yearOk;
+    });
+    // ロゴ系を先頭に（同じ年内でソート）
+    filteredItems.sort((a, b) => {
+      const aLogo = _LOGO_RE.test(a.title || '') ? 0 : 1;
+      const bLogo = _LOGO_RE.test(b.title || '') ? 0 : 1;
+      return aLogo - bLogo;
     });
     renderItems(false);
   }
@@ -5235,7 +5257,7 @@
       }
       imgObs.unobserve(img);
     });
-  }, { rootMargin: '200px' });
+  }, { rootMargin: '600px' });
 
   // Search
   const searchInput = document.getElementById('search-input');
@@ -5294,7 +5316,7 @@
 
 
   // ── Price Panel ───────────────────────────────────────────────
-  const _STOCKX_AFF = 'utm_source=af&utm_medium=imp&utm_campaign=2508955&utm_content=_530344&irgwc=1&afsrc=1';
+  const _STOCKX_URL = 'https://t.afi-b.com/visit.php?a=M13748Q-C457042k&p=r974859e';
   const _RAKUTEN_AF_ID = '51914ad6.2984967f.51914ad7.e99e7adc';
 
   function openPanel(item) {
@@ -5308,6 +5330,13 @@
     panelImg.onerror = () => { panelImg.style.opacity = '1'; };
     panelImg.src = newSrc;
     panelImg.alt = item.title || '';
+    // 画像リンク: 2020〜2026は個別ページ、それ以外はハッシュURL
+    const hasItemPage = item.slug && item.year >= 2020 && item.year <= 2026
+      && (item.platform === 'supsupsup' || item.platform === 'supnyplus');
+    const itemUrl = hasItemPage
+      ? `/items/${item.slug}.html`
+      : (item.slug ? `${location.origin}/#${item.slug}` : location.href);
+    panelImgLink.href = itemUrl;
 
     // 年バッジ
     if (item.year) {
@@ -5323,7 +5352,7 @@
 
     // アフィリエイトURL
     const q = encodeURIComponent(item.q || item.title || 'supreme');
-    const stockxUrl = 'https://stockx.com/ja-jp/search?s=supreme+' + q + '&' + _STOCKX_AFF;
+    const stockxUrl = _STOCKX_URL;
     const rakutenShopUrl = 'https://search.rakuten.co.jp/search/mall/supreme+' + q + '/';
     const rakutenUrl = 'https://hb.afl.rakuten.co.jp/hgc/' + _RAKUTEN_AF_ID + '/?pc=' + encodeURIComponent(rakutenShopUrl);
 
@@ -5340,6 +5369,12 @@
 
     document.querySelectorAll('.grid-item').forEach(el => el.classList.remove('selected'));
     document.querySelector(`[data-id="${item.id}"]`)?.classList.add('selected');
+
+    // パネルを開くとき、アドレスバーのURLを更新
+    if (item.slug) {
+      const newUrl = hasItemPage ? `/items/${item.slug}.html` : `/#${item.slug}`;
+      history.pushState(null, '', newUrl);
+    }
   }
 
   function closePanel() {
@@ -5350,6 +5385,9 @@
     backdrop.classList.remove('visible');
     panel.style.transform = '';
     document.querySelectorAll('.grid-item').forEach(el => el.classList.remove('selected'));
+
+    // ハッシュをクリア
+    if (location.hash) history.pushState(null, '', location.pathname + location.search);
   }
 
   panelClose.addEventListener('click', closePanel);
@@ -5428,6 +5466,36 @@
     openPanel(item);
   });
 
+  // ハッシュからパネルを開く
+  async function openPanelBySlug(slug) {
+    if (!slug) return;
+    // まず全年のJSONを検索（ハッシュでアクセスされた年は不明なため）
+    let found = Array.from(ITEMS_MAP.values()).find(i => i.slug === slug);
+    if (!found) {
+      // 全件JSONをフォールバックロード
+      try {
+        const r = await fetch('/items.json');
+        const all = await r.json();
+        all.forEach(item => ITEMS_MAP.set(item.id, item));
+        found = all.find(i => i.slug === slug);
+      } catch(e) {}
+    }
+    if (found) openPanel(found);
+  }
+
+  // ブラウザの戻る/進む対応
+  window.addEventListener('popstate', () => {
+    // ハッシュ or /items/slug.html パスからslugを取得
+    const hashSlug = location.hash.slice(1);
+    const pathSlug = location.pathname.match(/^\/items\/(.+)\.html$/)?.[1];
+    const slug = hashSlug || pathSlug;
+    if (slug) {
+      openPanelBySlug(slug);
+    } else {
+      closePanel();
+    }
+  });
+
   // 初回ロード: アクティブ年のみ取得（高速化）
   const skeletonGrid = document.getElementById('skeleton-grid');
   loadYear(activeYear)
@@ -5437,6 +5505,9 @@
       renderItems(false);
       if (skeletonGrid) skeletonGrid.style.display = 'none';
       if (gridLoading) gridLoading.style.display = 'none';
+      // URLハッシュがあれば対応するパネルを開く
+      const initSlug = location.hash.slice(1) || location.pathname.match(/^\/items\/(.+)\.html$/)?.[1];
+      if (initSlug) openPanelBySlug(initSlug);
     })
     .catch(() => {
       if (skeletonGrid) skeletonGrid.style.display = 'none';
