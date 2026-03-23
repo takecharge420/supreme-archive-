@@ -4901,7 +4901,7 @@
       <span class="item-count" id="shown-count">10833</span>
       <span>件</span>
       <span>·</span>
-      <span>2026-03-23</span>
+      <span>2026-03-24</span>
     </div>
   </header>
 
@@ -5092,7 +5092,7 @@
 
   <!-- Footer -->
   <footer class="site-footer">
-    Supreme Archive — 10833 items · 2026-03-23<br>
+    Supreme Archive — 10833 items · 2026-03-24<br>
     All images © their respective owners.<br>
     <a href="/privacy.html" style="color:var(--dim);text-decoration:underline;font-size:11px;">プライバシーポリシー</a>
     &nbsp;·&nbsp;
@@ -5232,11 +5232,15 @@
       }
       return yearOk;
     });
-    // ロゴ系を先頭に（同じ年内でソート）
+    // 2026: マルジェラコラボ → ロゴ系 → その他
+    const _MARGIELA_RE = /margiela|mm6/i;
     filteredItems.sort((a, b) => {
-      const aLogo = _LOGO_RE.test(a.title || '') ? 0 : 1;
-      const bLogo = _LOGO_RE.test(b.title || '') ? 0 : 1;
-      return aLogo - bLogo;
+      const rank = item => {
+        if (item.year === 2026 && _MARGIELA_RE.test(item.title || '')) return 0;
+        if (_LOGO_RE.test(item.title || '')) return 1;
+        return 2;
+      };
+      return rank(a) - rank(b);
     });
     renderItems(false);
   }
