@@ -5232,11 +5232,10 @@
       }
       return yearOk;
     });
-    // 2026: マルジェラコラボ → ロゴ系 → その他
-    const _MARGIELA_RE = /margiela|mm6/i;
+    // 2026: supnyplus（Margiela collab）→ ロゴ系 → その他
     filteredItems.sort((a, b) => {
       const rank = item => {
-        if (item.year === 2026 && _MARGIELA_RE.test(item.title || '')) return 0;
+        if (item.year === 2026 && item.platform === 'supnyplus') return 0;
         if (_LOGO_RE.test(item.title || '')) return 1;
         return 2;
       };
