@@ -5508,7 +5508,7 @@
   loadYear(activeYear)
     .then(data => {
       ITEMS = Array.from(ITEMS_MAP.values());
-      filteredItems = data;
+      applyFilters();
       renderItems(false);
       if (skeletonGrid) skeletonGrid.style.display = 'none';
       if (gridLoading) gridLoading.style.display = 'none';
