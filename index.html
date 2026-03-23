@@ -5162,11 +5162,11 @@
   function proxyImg(url, width) {
     if (!url || !url.startsWith('http')) return url;
     return 'https://wsrv.nl/?url=' + encodeURIComponent(url)
-      + '&w=' + width + '&output=webp&q=85&n=-1';
+      + '&w=' + width + '&output=webp&q=72&n=-1';
   }
 
   let _eagerCount = 0;
-  const EAGER_LIMIT = 20;
+  const EAGER_LIMIT = 12;
 
   function createGridItem(item) {
     const fig = document.createElement('figure');
@@ -5186,9 +5186,16 @@
     fig.innerHTML =
       `<div class="grid-img-wrap">` +
       seoLink +
-      (_eagerCount++ < EAGER_LIMIT
-        ? `<img src="${escHtml(proxyImg(item.img, 400))}" alt="${escHtml((item.title||'Supreme Item').slice(0,120))}" class="lazy-img">`
-        : `<img data-src="${escHtml(proxyImg(item.img, 400))}" src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" alt="${escHtml((item.title||'Supreme Item').slice(0,120))}" class="lazy-img">`) +
+      (() => {
+        const i = _eagerCount++;
+        const src = escHtml(proxyImg(item.img, 280));
+        const alt = escHtml((item.title||'Supreme Item').slice(0,120));
+        if (i < EAGER_LIMIT) {
+          const fp = i < 6 ? ' fetchpriority="high"' : '';
+          return `<img src="${src}" alt="${alt}" class="lazy-img"${fp}>`;
+        }
+        return `<img data-src="${src}" src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" alt="${alt}" class="lazy-img">`;
+      })() +
       `${seasonBadge}${infoHtml}` +
       `<div class="grid-hover"><span class="hover-label">CHECK →</span></div>` +
       `</div><figcaption class="sr-only">${escHtml(item.title||'')}</figcaption>`;
@@ -5253,7 +5260,7 @@
       }
       imgObs.unobserve(img);
     });
-  }, { rootMargin: '600px' });
+  }, { rootMargin: '1000px' });
 
   // Search
   const searchInput = document.getElementById('search-input');
@@ -5321,7 +5328,7 @@
     // 画像: 一度クリアしてからセット（前の画像が残らないように）
     panelImg.style.opacity = '0';
     panelImg.src = '';
-    const newSrc = proxyImg(item.img, 800);
+    const newSrc = proxyImg(item.img, 600);
     panelImg.onload = () => { panelImg.style.opacity = '1'; };
     panelImg.onerror = () => { panelImg.style.opacity = '1'; };
     panelImg.src = newSrc;
