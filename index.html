@@ -5164,7 +5164,7 @@
     if (!url || !url.startsWith('http')) return url;
     if (_NO_PROXY.test(url)) return url;  // 直接アクセス可能
     return 'https://wsrv.nl/?url=' + encodeURIComponent(url)
-      + '&w=' + width + '&output=webp&q=72&n=-1';
+      + '&w=' + width + '&output=webp&q=85&n=-1';
   }
 
   let _eagerCount = 0;
@@ -5186,7 +5186,7 @@
       ? `<a href="/items/${item.slug}.html" aria-label="${escHtml(item.title||'Supreme Item')}" style="position:absolute;inset:0;z-index:1;" tabindex="-1"></a>`
       : '';
     const ei = _eagerCount++;
-    const src = escHtml(proxyImg(item.img, 280));
+    const src = escHtml(proxyImg(item.img, 600));
     const alt = escHtml((item.title||'Supreme Item').slice(0,120));
     const loadingAttr = ei < EAGER_LIMIT ? 'eager' : 'lazy';
     const fpAttr = ei < 6 ? ' fetchpriority="high"' : '';
