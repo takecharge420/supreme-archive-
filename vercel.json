@@ -8,6 +8,10 @@
           "value": "noai, noimageai"
         },
         {
+          "key": "TDM-Reservation",
+          "value": "1"
+        },
+        {
           "key": "X-Content-Type-Options",
           "value": "nosniff"
         },

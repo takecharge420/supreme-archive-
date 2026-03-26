@@ -2,14 +2,17 @@
 User-agent: Googlebot
 Allow: /
 Disallow: /items.json
+Disallow: /items-*.json
 
 User-agent: Bingbot
 Allow: /
 Disallow: /items.json
+Disallow: /items-*.json
 
 User-agent: Slurp
 Allow: /
 Disallow: /items.json
+Disallow: /items-*.json
 
 # ── AI学習Bot（全拒否） ───────────────────────────────────────
 User-agent: GPTBot
@@ -37,6 +40,9 @@ User-agent: Google-Extended
 Disallow: /
 
 User-agent: Applebot-Extended
+Disallow: /
+
+User-agent: Applebot
 Disallow: /
 
 User-agent: PerplexityBot
@@ -81,6 +87,30 @@ Disallow: /
 User-agent: Scrapy
 Disallow: /
 
+User-agent: AI2Bot
+Disallow: /
+
+User-agent: Ai2Bot-Dolma
+Disallow: /
+
+User-agent: MistralAI-User
+Disallow: /
+
+User-agent: Timpibot
+Disallow: /
+
+User-agent: PetalBot
+Disallow: /
+
+User-agent: FriendlyCrawler
+Disallow: /
+
+User-agent: iaskspider
+Disallow: /
+
+User-agent: Meltwater
+Disallow: /
+
 # ── スクレイパー・一括取得Bot ─────────────────────────────────
 User-agent: AhrefsBot
 Disallow: /
@@ -97,9 +127,10 @@ Disallow: /
 User-agent: BLEXBot
 Disallow: /
 
-# ── デフォルト（未定義Botは/items.jsonとAPIのみ拒否） ─────────
+# ── デフォルト（未定義Botはデータ系のみ拒否） ─────────────────
 User-agent: *
 Allow: /
 Disallow: /items.json
+Disallow: /items-*.json
 
 Sitemap: https://supremearchive.site/sitemap.xml
