@@ -5158,13 +5158,8 @@
     return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
   }
 
-  // 画像プロキシ: ホットリンク保護が不要なドメインは直接返す
-  const _NO_PROXY = /supsupsup\.com|supnyplus\.com/;
-  function proxyImg(url, width) {
-    if (!url || !url.startsWith('http')) return url;
-    if (_NO_PROXY.test(url)) return url;  // 直接アクセス可能
-    return 'https://wsrv.nl/?url=' + encodeURIComponent(url)
-      + '&w=' + width + '&output=webp&q=85&n=-1';
+  function proxyImg(url) {
+    return url || '';
   }
 
   let _eagerCount = 0;
@@ -5186,7 +5181,7 @@
       ? `<a href="/items/${item.slug}.html" aria-label="${escHtml(item.title||'Supreme Item')}" style="position:absolute;inset:0;z-index:1;" tabindex="-1"></a>`
       : '';
     const ei = _eagerCount++;
-    const src = escHtml(proxyImg(item.img, 600));
+    const src = escHtml(proxyImg(item.img));
     const alt = escHtml((item.title||'Supreme Item').slice(0,120));
     const loadingAttr = ei < EAGER_LIMIT ? 'eager' : 'lazy';
     const fpAttr = ei < 6 ? ' fetchpriority="high"' : '';
@@ -5311,7 +5306,7 @@
     // 画像: 一度クリアしてからセット（前の画像が残らないように）
     panelImg.style.opacity = '0';
     panelImg.src = '';
-    const newSrc = proxyImg(item.img, 600);
+    const newSrc = proxyImg(item.img);
     panelImg.onload = () => { panelImg.style.opacity = '1'; };
     panelImg.onerror = () => { panelImg.style.opacity = '1'; };
     panelImg.src = newSrc;
