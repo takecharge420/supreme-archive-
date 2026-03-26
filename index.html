@@ -5185,19 +5185,15 @@
     const seoLink = item.slug
       ? `<a href="/items/${item.slug}.html" aria-label="${escHtml(item.title||'Supreme Item')}" style="position:absolute;inset:0;z-index:1;" tabindex="-1"></a>`
       : '';
+    const ei = _eagerCount++;
+    const src = escHtml(proxyImg(item.img, 280));
+    const alt = escHtml((item.title||'Supreme Item').slice(0,120));
+    const loadingAttr = ei < EAGER_LIMIT ? 'eager' : 'lazy';
+    const fpAttr = ei < 6 ? ' fetchpriority="high"' : '';
     fig.innerHTML =
       `<div class="grid-img-wrap">` +
       seoLink +
-      (() => {
-        const i = _eagerCount++;
-        const src = escHtml(proxyImg(item.img, 280));
-        const alt = escHtml((item.title||'Supreme Item').slice(0,120));
-        if (i < EAGER_LIMIT) {
-          const fp = i < 6 ? ' fetchpriority="high"' : '';
-          return `<img src="${src}" alt="${alt}" class="lazy-img"${fp}>`;
-        }
-        return `<img data-src="${src}" src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" alt="${alt}" class="lazy-img">`;
-      })() +
+      `<img src="${src}" alt="${alt}" loading="${loadingAttr}"${fpAttr} class="lazy-img">` +
       `${seasonBadge}${infoHtml}` +
       `<div class="grid-hover"><span class="hover-label">CHECK →</span></div>` +
       `</div><figcaption class="sr-only">${escHtml(item.title||'')}</figcaption>`;
@@ -5213,10 +5209,6 @@
     grid.appendChild(frag);
     shownCount.textContent = filteredItems.length;
     emptyMsg.style.display = filteredItems.length === 0 ? 'block' : 'none';
-    // 新規追加されたlazy-img要素をImgObserverに登録
-    if (typeof imgObs !== 'undefined') {
-      grid.querySelectorAll('img.lazy-img[data-src]').forEach(img => imgObs.observe(img));
-    }
   }
 
   function applyFilters() {
@@ -5252,20 +5244,6 @@
     if (entries[0].isIntersecting && renderedCount < filteredItems.length) renderItems(true);
   }, { rootMargin: '400px' });
   scrollObs.observe(sentinel);
-
-  // 画像 lazy load（data-src → src をビューポート手前で切り替え）
-  const imgObs = new IntersectionObserver(entries => {
-    entries.forEach(entry => {
-      if (!entry.isIntersecting) return;
-      const img = entry.target;
-      const src = img.dataset.src;
-      if (src) {
-        img.src = src;
-        img.removeAttribute('data-src');
-      }
-      imgObs.unobserve(img);
-    });
-  }, { rootMargin: '1000px' });
 
   // Search
   const searchInput = document.getElementById('search-input');
