@@ -5158,9 +5158,11 @@
     return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
   }
 
-  // 画像プロキシ: ホットリンク保護回避 + WebP変換 + リサイズ最適化
+  // 画像プロキシ: ホットリンク保護が不要なドメインは直接返す
+  const _NO_PROXY = /supsupsup\.com|supnyplus\.com/;
   function proxyImg(url, width) {
     if (!url || !url.startsWith('http')) return url;
+    if (_NO_PROXY.test(url)) return url;  // 直接アクセス可能
     return 'https://wsrv.nl/?url=' + encodeURIComponent(url)
       + '&w=' + width + '&output=webp&q=72&n=-1';
   }
